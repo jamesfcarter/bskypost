@@ -75,7 +75,7 @@ func record(msg string) (*util.LexiconTypeDecoder, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal JSON: %w", err)
 	}
-	fmt.Println(string(rJSON))
+	log.Println(string(rJSON))
 	var result util.LexiconTypeDecoder
 	err = result.UnmarshalJSON(rJSON)
 	if err != nil {
@@ -97,7 +97,7 @@ func post(as string, msg string) func(api *xrpc.Client) error {
 			Record:     record,
 		}
 		cro, err := atproto.RepoCreateRecord(context.Background(), api, cri)
-		fmt.Printf("%+v\n", cro)
+		log.Printf("%+v\n", cro)
 		return err
 	}
 }
@@ -151,6 +151,6 @@ func main() {
 
 	err = blueskyMessage(bskyUser, bskyAppKey, msg)
 	if err != nil {
-		log.Fatalf("failed to read message from stdin: %v", err)
+		log.Fatal(err)
 	}
 }
